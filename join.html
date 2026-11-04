@@ -65,6 +65,8 @@ window.FLAT_CONFIG = {
     }
     if (c.GA4_ID && window.gtag) { try { gtag("event", name, params); } catch (e) {} }
     if (metaName && window.fbq) { try { fbq("trackCustom", metaName, params, params.event_id ? { eventID: params.event_id } : undefined); } catch (e) {} }
+    /* LINEクリックは標準イベント「Contact（連絡先）」でも送る：広告セットの成果イベントとして直接選べるようにするため（登録完了＝Leadではない） */
+    if (metaName === "LineClick" && window.fbq) { try { fbq("track", "Contact", { content_name: "line_click", cta_location: params.cta_location, variant: params.variant }, params.event_id ? { eventID: params.event_id + "_c" } : undefined); } catch (e) {} }
   };
 })();
 </script>
